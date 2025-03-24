@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Try-On Plugin</title>
+    <style>
+        body {
+            display: flex;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            font-family: Arial, sans-serif;
+            color: #fff;
+            text-align: center;
+        }
+        .container {
+            background: #282c34;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            width: 350px;
+        }
+        input[type="file"] {
+            margin: 10px 0;
+            padding: 8px;
+            background-color: #4facfe;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+        }
+        #display-container {
+            margin-top: 20px;
+            background: #1e2127;
+            height: 300px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px dashed #4facfe;
+        }
+        #preview-img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Virtual Try-On Plugin</h1>
+        <label for="user-image">Upload User Image:</label>
+        <input type="file" id="user-image" accept="image/*">
+        
+        <label for="cloth-image">Upload Clothing Image:</label>
+        <input type="file" id="cloth-image" accept="image/*">
+        
+        <div id="display-container">
+            <img id="preview-img" src="" alt="3D Model Preview" hidden>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('cloth-image').addEventListener('change', function(event) {
+            const displayContainer = document.getElementById('display-container');
+            const previewImg = document.getElementById('preview-img');
+            
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
+                    previewImg.hidden = false;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>
